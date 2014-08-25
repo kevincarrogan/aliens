@@ -1,9 +1,16 @@
 #!/usr/bin/python
 import sys
+import argparse
+import random
 
 from city import City
+from alien import Alien
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Simulate an alien invasion.')
+    parser.add_argument('num_aliens', type=int, help='Number of aliens')
+    args = parser.parse_args()
+
     cities = {}
     for line in sys.stdin:
         line = line.strip()
@@ -17,3 +24,10 @@ if __name__ == '__main__':
                 point: other_city
             }
         cities[city_name] = City(city_name, **direction_args)
+
+    aliens = []
+    num_aliens = args.num_aliens
+    for i in range(num_aliens):
+        alien_name = 'Alien {}'.format(i + 1)
+        start_city = random.choice(cities.values())
+        aliens.append(Alien(alien_name, start_city))
