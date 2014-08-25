@@ -6,4 +6,9 @@ class Simulation(object):
         self.runs = 0
 
     def run(self):
-        print 'Running simulation'
+        while self.runs < 10000:
+            for alien in self.aliens:
+                alien.move()
+
+            self.runs += 1
+        print 'Finished running'
