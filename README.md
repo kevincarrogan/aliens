@@ -1,4 +1,4 @@
-# Alien invastion
+# Alien invasion
 
 ## How to run
 
