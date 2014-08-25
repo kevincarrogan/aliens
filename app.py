@@ -27,3 +27,11 @@ if __name__ == '__main__':
 
     simulation = Simulation(cities, num_aliens)
     simulation.run()
+
+    for city in simulation.cities:
+        directions = []
+        for direction in city.directions:
+            other_city = getattr(city, direction)
+            if other_city:
+                directions.append('{}={}'.format(direction, other_city.name))
+        print '{} {}'.format(city.name, ' '.join(directions))
