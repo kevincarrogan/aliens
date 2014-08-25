@@ -33,7 +33,6 @@ if __name__ == '__main__':
         for city in cities.values()
     )
 
-    aliens = set()
     num_aliens = args.num_aliens
 
     simulation = Simulation(cities, num_aliens)
