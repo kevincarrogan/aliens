@@ -6,3 +6,6 @@ class City(object):
         self.south = south
         self.east = east
         self.west = west
+
+    def __repr__(self):
+        return self.name
