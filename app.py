@@ -5,6 +5,7 @@ import random
 
 from city import City
 from alien import Alien
+from simulation import Simulation
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simulate an alien invasion.')
@@ -36,3 +37,6 @@ if __name__ == '__main__':
         alien_name = 'Alien {}'.format(i + 1)
         start_city = random.choice(cities.values())
         aliens.append(Alien(alien_name, start_city))
+
+    simulation = Simulation(cities, aliens)
+    simulation.run()
