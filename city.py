@@ -18,5 +18,13 @@ class City(object):
             if getattr(self, direction)
         ]
 
+    def remove_connections(self):
+        for direction in self.directions:
+            other_city = getattr(self, direction)
+            if other_city:
+                for other_direction in self.directions:
+                    if getattr(other_city, other_direction) == self:
+                        setattr(other_city, other_direction, None)
+
     def __repr__(self):
-        return self.name
+        return '<City: {}>'.format(self.name)

@@ -31,12 +31,17 @@ if __name__ == '__main__':
             other_city = cities[other_city_name]
             setattr(city, direction, other_city[0])
 
+    cities = set(
+        city[0]
+        for city in cities.values()
+    )
+
     aliens = []
     num_aliens = args.num_aliens
     for i in range(num_aliens):
         alien_name = 'Alien {}'.format(i + 1)
-        start_city = random.choice(cities.values())
-        aliens.append(Alien(alien_name, start_city[0]))
+        start_city = random.choice(list(cities))
+        aliens.append(Alien(alien_name, start_city))
 
     simulation = Simulation(cities, aliens)
     simulation.run()

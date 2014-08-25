@@ -10,11 +10,12 @@ class Alien(object):
     def move(self):
         adjacent_cities = self.city.adjacent_cities
 
-        new_city = random.choice(adjacent_cities)
+        if adjacent_cities:
+            new_city = random.choice(adjacent_cities)
 
-        self.city.aliens.remove(self)
-        self.city = new_city
-        self.city.aliens.add(self)
+            self.city.aliens.remove(self)
+            self.city = new_city
+            self.city.aliens.add(self)
 
     def __repr__(self):
         return '{} ({})'.format(self.name, self.city)
