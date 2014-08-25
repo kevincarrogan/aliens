@@ -17,5 +17,9 @@ class Alien(object):
             self.city = new_city
             self.city.aliens.add(self)
 
+    @property
+    def is_trapped(self):
+        return len(self.city.adjacent_cities) == 0
+
     def __repr__(self):
         return '{} ({})'.format(self.name, self.city)

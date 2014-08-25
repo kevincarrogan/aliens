@@ -22,6 +22,7 @@ class City(object):
         for direction in self.directions:
             other_city = getattr(self, direction)
             if other_city:
+                setattr(self, direction, None)
                 for other_direction in self.directions:
                     if getattr(other_city, other_direction) == self:
                         setattr(other_city, other_direction, None)

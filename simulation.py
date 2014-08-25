@@ -33,7 +33,7 @@ class Simulation(object):
             self.aliens.add(Alien(alien_name, start_city))
 
     def run(self):
-        while self.runs < 10000 and self.aliens:
+        while self.runs < 10000 and self.aliens and not all(alien.is_trapped for alien in self.aliens):
             self.move_aliens()
             self.fight_aliens()
 
