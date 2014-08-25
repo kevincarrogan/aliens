@@ -21,10 +21,8 @@ if __name__ == '__main__':
         direction_args = {}
         for direction in directions:
             point, other_city = direction.split('=')
-            direction_args = {
-                point: other_city
-            }
-        cities[city_name] = (City(city_name), direction_args)
+            direction_args[point] = other_city
+        cities[city_name] = ((City(city_name), direction_args))
 
     for _, (city, directions) in cities.iteritems():
         for direction, other_city_name in directions.iteritems():
