@@ -29,7 +29,7 @@ if __name__ == '__main__':
     for _, (city, directions) in cities.iteritems():
         for direction, other_city_name in directions.iteritems():
             other_city = cities[other_city_name]
-            setattr(city, direction, other_city)
+            setattr(city, direction, other_city[0])
 
     aliens = []
     num_aliens = args.num_aliens
