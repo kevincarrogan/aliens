@@ -1,9 +1,21 @@
+import random
+
+from alien import Alien
+
 class Simulation(object):
 
-    def __init__(self, cities, aliens):
+    def __init__(self, cities, num_aliens):
         self.cities = cities
-        self.aliens = aliens
+        self.aliens = set()
         self.runs = 0
+
+        self.create_aliens(num_aliens)
+
+    def create_aliens(self, num_aliens):
+        for i in range(num_aliens):
+            alien_name = 'Alien {}'.format(i + 1)
+            start_city = random.choice(list(self.cities))
+            self.aliens.add(Alien(alien_name, start_city))
 
     def run(self):
         while self.runs < 10000 and self.aliens:

@@ -4,7 +4,6 @@ import argparse
 import random
 
 from city import City
-from alien import Alien
 from simulation import Simulation
 
 if __name__ == '__main__':
@@ -36,10 +35,6 @@ if __name__ == '__main__':
 
     aliens = set()
     num_aliens = args.num_aliens
-    for i in range(num_aliens):
-        alien_name = 'Alien {}'.format(i + 1)
-        start_city = random.choice(list(cities))
-        aliens.add(Alien(alien_name, start_city))
 
-    simulation = Simulation(cities, aliens)
+    simulation = Simulation(cities, num_aliens)
     simulation.run()
