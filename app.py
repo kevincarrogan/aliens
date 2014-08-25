@@ -36,7 +36,7 @@ if __name__ == '__main__':
     for i in range(num_aliens):
         alien_name = 'Alien {}'.format(i + 1)
         start_city = random.choice(cities.values())
-        aliens.append(Alien(alien_name, start_city))
+        aliens.append(Alien(alien_name, start_city[0]))
 
     simulation = Simulation(cities, aliens)
     simulation.run()

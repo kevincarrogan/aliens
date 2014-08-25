@@ -6,6 +6,7 @@ class City(object):
         self.east = None
         self.south = None
         self.west = None
+        self.aliens = []
 
     def __repr__(self):
         return self.name
