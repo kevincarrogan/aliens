@@ -34,12 +34,12 @@ if __name__ == '__main__':
         for city in cities.values()
     )
 
-    aliens = []
+    aliens = set()
     num_aliens = args.num_aliens
     for i in range(num_aliens):
         alien_name = 'Alien {}'.format(i + 1)
         start_city = random.choice(list(cities))
-        aliens.append(Alien(alien_name, start_city))
+        aliens.add(Alien(alien_name, start_city))
 
     simulation = Simulation(cities, aliens)
     simulation.run()
