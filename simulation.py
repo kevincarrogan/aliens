@@ -1,15 +1,30 @@
 import random
 
+from city import City
 from alien import Alien
 
 class Simulation(object):
 
-    def __init__(self, cities, num_aliens):
-        self.cities = cities
+    def __init__(self, city_network, num_aliens):
+        self.cities = set()
         self.aliens = set()
         self.runs = 0
 
+        self.create_cities(city_network)
         self.create_aliens(num_aliens)
+
+    def create_cities(self, city_network):
+        generated_cities = {}
+        for city_name, directions in city_network.iteritems():
+            city = City(city_name)
+            generated_cities[city_name] = city
+            for direction, other_city_name in directions.iteritems():
+                if other_city_name not in generated_cities:
+                    generated_cities[other_city_name] = (City(other_city_name))
+                other_city = generated_cities[other_city_name]
+                setattr(city, direction, other_city)
+
+        self.cities = set(generated_cities.values())
 
     def create_aliens(self, num_aliens):
         for i in range(num_aliens):

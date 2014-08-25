@@ -21,17 +21,7 @@ if __name__ == '__main__':
         for direction in directions:
             point, other_city = direction.split('=')
             direction_args[point] = other_city
-        cities[city_name] = ((City(city_name), direction_args))
-
-    for _, (city, directions) in cities.iteritems():
-        for direction, other_city_name in directions.iteritems():
-            other_city = cities[other_city_name]
-            setattr(city, direction, other_city[0])
-
-    cities = set(
-        city[0]
-        for city in cities.values()
-    )
+        cities[city_name] = direction_args
 
     num_aliens = args.num_aliens
 
