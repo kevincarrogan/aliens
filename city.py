@@ -1,11 +1,11 @@
 class City(object):
 
-    def __init__(self, name, north=None, south=None, east=None, west=None):
+    def __init__(self, name):
         self.name = name
-        self.north = north
-        self.south = south
-        self.east = east
-        self.west = west
+        self.north = None
+        self.east = None
+        self.south = None
+        self.west = None
 
     def __repr__(self):
         return self.name
