@@ -110,4 +110,5 @@ def destroy(cities, aliens):
 
     return new_cities, new_aliens
 
-cities, aliens = destroy(cities, aliens)
+for i in range(10000):
+    cities, aliens = destroy(cities, aliens)
