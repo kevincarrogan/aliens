@@ -4,6 +4,14 @@ import random
 import sys
 
 
+def generate_cities(lines):
+    cities = {}
+    for line in lines:
+        name, directions = city_from_line(line)
+        cities[name] = directions
+    return cities
+
+
 def random_city(cities):
     return random.choice(cities.keys())
 
@@ -95,21 +103,23 @@ def city_from_line(line):
     return city_name, direction_args
 
 
+def print_output(cities):
+    for city, directions in cities.items():
+        formatted_directions = ['{}={}'.format(k, v) for k, v in directions.items()]
+        formatted_directions = ' '.join(formatted_directions)
+        print '{} {}'.format(city, formatted_directions)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simulate an alien invasion.')
     parser.add_argument('num_aliens', type=int, help='Number of aliens')
     args = parser.parse_args()
 
-    cities = {}
-    for line in sys.stdin:
-        name, directions = city_from_line(line)
-        cities[name] = directions
-
+    cities = generate_cities(sys.stdin)
     aliens = generate_aliens(cities, args.num_aliens)
 
     for i in range(10000):
         aliens = wander_aliens(cities, aliens)
         cities, aliens = destroy(cities, aliens)
 
-    print cities
-    print aliens
+    print_output(cities)
