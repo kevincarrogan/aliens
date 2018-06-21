@@ -103,11 +103,11 @@ def city_from_line(line):
     return city_name, direction_args
 
 
-def print_output(cities):
+def output(cities):
     for city, directions in cities.items():
         formatted_directions = ['{}={}'.format(k, v) for k, v in directions.items()]
         formatted_directions = ' '.join(formatted_directions)
-        print '{} {}'.format(city, formatted_directions)
+        yield '{} {}'.format(city, formatted_directions)
 
 
 if __name__ == '__main__':
@@ -122,4 +122,5 @@ if __name__ == '__main__':
         aliens = wander_aliens(cities, aliens)
         cities, aliens = destroy(cities, aliens)
 
-    print_output(cities)
+    for city in output(cities):
+        print(city)
