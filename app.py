@@ -1,29 +1,33 @@
 #!/bin/python
 import random
 
-# A dictionary of cities.
-# The key being the name of the city and the corresponding dictionary value
-# being a dictionary of each city name in that direction.
-cities = {
-    'Foo': {
-        'north': 'Bar',
-        'west': 'Baz',
-        'south': 'Qu-ux',
-    },
-    'Bar': {
-        'north': 'Foo',
-        'west': 'Bee',
-    },
-    'Baz': {
-        'east': 'Foo',
-    },
-    'Qu-ux': {
-        'north': 'Foo',
-    },
-    'Bee': {
-        'east': 'Bar',
-    },
-}
+
+def generate_cities():
+    # A dictionary of cities.
+    # The key being the name of the city and the corresponding dictionary value
+    # being a dictionary of each city name in that direction.
+    cities = {
+        'Foo': {
+            'north': 'Bar',
+            'west': 'Baz',
+            'south': 'Qu-ux',
+        },
+        'Bar': {
+            'north': 'Foo',
+            'west': 'Bee',
+        },
+        'Baz': {
+            'east': 'Foo',
+        },
+        'Qu-ux': {
+            'north': 'Foo',
+        },
+        'Bee': {
+            'east': 'Bar',
+        },
+    }
+
+    return cities
 
 
 def random_city(cities):
@@ -31,23 +35,20 @@ def random_city(cities):
 
 
 def generate_aliens(cities, number_to_generate):
+    # A dictionary of aliens.
+    # The key is the name of the alien and the value is the city the alien is currently
+    # located in.
+    # aliens = {
+    #    'alien 1': 'Foo',
+    #    'alien 2': 'Bar',
+    #    'alien 3': 'Baz',
+    # }
     aliens = {}
     for i in range(number_to_generate):
         name = 'alien {}'.format(i)
         city = random_city(cities)
         aliens[name] = city
     return aliens
-
-
-# A dictionary of aliens.
-# The key is the name of the alien and the value is the city the alien is currently
-# located in.
-# aliens = {
-#    'alien 1': 'Foo',
-#    'alien 2': 'Bar',
-#    'alien 3': 'Baz',
-# }
-aliens = generate_aliens(cities, 10)
 
 
 def random_connected_city(cities, current_city):
@@ -64,9 +65,6 @@ def wander_aliens(cities, aliens):
     for name, current_city in aliens.items():
         new_aliens[name] = random_connected_city(cities, current_city)
     return new_aliens
-
-
-aliens = wander_aliens(cities, aliens)
 
 
 def get_aliens_in_city(aliens, city):
@@ -110,5 +108,9 @@ def destroy(cities, aliens):
 
     return new_cities, new_aliens
 
+cities = generate_cities()
+aliens = generate_aliens(cities, 10)
+
 for i in range(10000):
+    aliens = wander_aliens(cities, aliens)
     cities, aliens = destroy(cities, aliens)
