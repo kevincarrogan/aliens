@@ -1,33 +1,7 @@
 #!/bin/python
+import argparse
 import random
-
-
-def generate_cities():
-    # A dictionary of cities.
-    # The key being the name of the city and the corresponding dictionary value
-    # being a dictionary of each city name in that direction.
-    cities = {
-        'Foo': {
-            'north': 'Bar',
-            'west': 'Baz',
-            'south': 'Qu-ux',
-        },
-        'Bar': {
-            'north': 'Foo',
-            'west': 'Bee',
-        },
-        'Baz': {
-            'east': 'Foo',
-        },
-        'Qu-ux': {
-            'north': 'Foo',
-        },
-        'Bee': {
-            'east': 'Bar',
-        },
-    }
-
-    return cities
+import sys
 
 
 def random_city(cities):
@@ -108,9 +82,34 @@ def destroy(cities, aliens):
 
     return new_cities, new_aliens
 
-cities = generate_cities()
-aliens = generate_aliens(cities, 10)
 
-for i in range(10000):
-    aliens = wander_aliens(cities, aliens)
-    cities, aliens = destroy(cities, aliens)
+def city_from_line(line):
+    line = line.strip()
+    city_data = line.split(' ')
+    city_name = city_data[0]
+    directions = city_data[1:]
+    direction_args = {}
+    for direction in directions:
+        point, other_city = direction.split('=')
+        direction_args[point] = other_city
+    return city_name, direction_args
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Simulate an alien invasion.')
+    parser.add_argument('num_aliens', type=int, help='Number of aliens')
+    args = parser.parse_args()
+
+    cities = {}
+    for line in sys.stdin:
+        name, directions = city_from_line(line)
+        cities[name] = directions
+
+    aliens = generate_aliens(cities, args.num_aliens)
+
+    for i in range(10000):
+        aliens = wander_aliens(cities, aliens)
+        cities, aliens = destroy(cities, aliens)
+
+    print cities
+    print aliens
