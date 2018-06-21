@@ -25,8 +25,6 @@ cities = {
     },
 }
 
-print cities
-
 
 def random_city(cities):
     return random.choice(cities.keys())
@@ -50,7 +48,6 @@ def generate_aliens(cities, number_to_generate):
 #    'alien 3': 'Baz',
 # }
 aliens = generate_aliens(cities, 10)
-print aliens
 
 
 def random_connected_city(cities, current_city):
@@ -70,7 +67,6 @@ def wander_aliens(cities, aliens):
 
 
 aliens = wander_aliens(cities, aliens)
-print aliens
 
 
 def get_aliens_in_city(aliens, city):
@@ -115,5 +111,3 @@ def destroy(cities, aliens):
     return new_cities, new_aliens
 
 cities, aliens = destroy(cities, aliens)
-print cities
-print aliens
