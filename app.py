@@ -1,6 +1,6 @@
 #!/bin/python
 
-# A map of cities.
+# A dictionary of cities.
 # The key being the name of the city and the corresponding dictionary value
 # being a dictionary of each city name in that direction.
 cities = {
@@ -22,4 +22,13 @@ cities = {
     'Bee': {
         'East': 'Bar',
     },
+}
+
+# A dictionary of aliens.
+# The key is the name of the alien and the value is the city the alien is currently
+# located in.
+aliens = {
+    'alien 1': 'Foo',
+    'alien 2': 'Bar',
+    'alien 3': 'Baz',
 }
