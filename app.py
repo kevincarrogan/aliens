@@ -25,6 +25,8 @@ cities = {
     },
 }
 
+print cities
+
 
 def random_city(cities):
     return random.choice(cities.keys())
@@ -48,3 +50,27 @@ def generate_aliens(number_to_generate):
 #    'alien 3': 'Baz',
 # }
 aliens = generate_aliens(10)
+print aliens
+
+
+def random_connected_city(current_city):
+    available_choices = cities[current_city]
+    if len(available_choices):
+        return random.choice(available_choices.values())
+    else:
+        # The alien is stuck with nowhere to go
+        return current_city
+
+
+def wander_aliens(aliens):
+    new_aliens = {}
+    for name, current_city in aliens.items():
+        new_aliens[name] = random_connected_city(current_city)
+    return new_aliens
+
+
+aliens = wander_aliens(aliens)
+
+
+print(aliens)
+
