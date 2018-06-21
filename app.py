@@ -17,14 +17,6 @@ def random_city(cities):
 
 
 def generate_aliens(cities, number_to_generate):
-    # A dictionary of aliens.
-    # The key is the name of the alien and the value is the city the alien is currently
-    # located in.
-    # aliens = {
-    #    'alien 1': 'Foo',
-    #    'alien 2': 'Bar',
-    #    'alien 3': 'Baz',
-    # }
     aliens = {}
     for i in range(number_to_generate):
         name = 'alien {}'.format(i)
