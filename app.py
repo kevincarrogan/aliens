@@ -21,7 +21,7 @@ cities = {
         'north': 'Foo',
     },
     'Bee': {
-        'East': 'Bar',
+        'east': 'Bar',
     },
 }
 
@@ -70,7 +70,46 @@ def wander_aliens(cities, aliens):
 
 
 aliens = wander_aliens(cities, aliens)
+print aliens
 
 
-print(aliens)
+def get_aliens_in_city(aliens, city):
+    found_aliens = []
+    for alien, current_city in aliens.items():
+        if current_city == city:
+            found_aliens.append(alien)
 
+    return found_aliens
+
+
+def destroy(cities, aliens):
+    new_cities = {}
+    new_aliens = {}
+
+    destroyed_cities = set()
+    destroyed_aliens = set()
+
+    for city in cities.keys():
+        aliens_in_city = get_aliens_in_city(aliens, city)
+        if len(aliens_in_city) > 1:
+            destroyed_cities.add(city)
+            for alien in aliens_in_city:
+                destroyed_aliens.add(alien)
+
+    for city, connections in cities.items():
+        if city not in destroyed_cities:
+            new_connections = {}
+            for direction, connected_city in connections.items():
+                if connected_city not in destroyed_cities:
+                    new_connections[direction] = connected_city
+            new_cities[city] = new_connections
+
+    for alien, city in aliens.items():
+        if alien not in destroyed_aliens:
+            new_aliens[alien] = city
+
+    return new_cities, new_aliens
+
+cities, aliens = destroy(cities, aliens)
+print cities
+print aliens
