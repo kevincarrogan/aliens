@@ -36,6 +36,17 @@ def partition_network(network):
     return visited_network, remaining_network
 
 
+def all_network_partitions(network):
+    """Get a list of unique, coherent networks."""
+    unique_networks = []
+
+    while network:
+        n, network = partition_network(network)
+        unique_networks.append(n)
+
+    return unique_networks
+
+
 def fixup_network(network):
     """Insure that if A -> B, then B -> A."""
     # We need to iterate over a copy of the keys else we get RuntimeError
@@ -90,12 +101,21 @@ def move_alien(city_map, start_city):
 
 
 def cities_with_multiple_aliens(alien_positions):
-    """Returns a set of cities where more than 1 alien moved."""
-    counts = collections.Counter(alien_positions)
-    # Don't include None in ruined cities.
-    ruined_cities = [city for city in counts if city and counts[city] > 1]
+    """Returns a dict of cities where more than 1 alien moved.
 
-    return ruined_cities
+    The key is a city name, the value is a list of alien IDs in that city.
+    """
+    counts = collections.defaultdict(list)
+
+    for alien_id, city in enumerate(alien_positions):
+        # Don't count `None` as a city (it means that alien is dead).
+        if city:
+            counts[city].append(alien_id)
+
+    # Only cities with more than 1 alien.
+    counts = {city: alien_ids for city, alien_ids in counts.items() if len(alien_ids) > 1}
+
+    return counts
 
 
 def remove_network_connections(network, dead_nodes):
@@ -150,7 +170,13 @@ def main(argv):
         # Here we need to say which aliens were killed in which cities.
         # TODO!
         if ruined_cities:
-            sys.stderr.write('turn %s: %r\n' % (turn, ruined_cities))
+            for city, alien_ids in sorted(ruined_cities.items()):
+                sys.stderr.write('Turn %s: %r was destroyed by aliens %r\n' % (turn, city, alien_ids))
+
+            # Let's see if we have a split network yet.
+            partitions = all_network_partitions(city_map)
+            if len(partitions) > 1:
+                sys.stderr.write('Split networks %r\n' % ([len(n) for n in partitions]))
 
         alien_positions = [None if c in ruined_cities else c for c in alien_positions]
         remove_network_connections(city_map, ruined_cities)
@@ -158,6 +184,8 @@ def main(argv):
         if not any(alien_positions):
             # All the aliens are dead!
             break
+
+    sys.stderr.write('Finished on turn %s\n' % turn)
 
     # And give the final status of the map.
     write_network(city_map, sys.stdout)
