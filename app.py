@@ -95,6 +95,10 @@ def destroy(cities, aliens):
             destroyed_cities.add(city)
             for alien in aliens_in_city:
                 destroyed_aliens.add(alien)
+            print '{} has been destroyed by {}!'.format(
+                city,
+                ' and '.join(aliens_in_city),
+            )
 
     for city, connections in cities.items():
         if city not in destroyed_cities:
